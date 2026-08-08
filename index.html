@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aladdin — 按下 Fn 说话，文字落进光标</title>
+<title>Aladdin — the lamp between you and AI</title>
 <link rel="icon" type="image/png" href="./assets/favicon.png">
 <style>
 :root {
@@ -17,15 +17,15 @@
   --shadow: 0 4px 24px rgba(0,0,0,0.45);
   --r-control: 8px;
   --r-media: 18px;
-  --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
-               "Segoe UI", Roboto, "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", ui-monospace, Menlo, monospace;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font-text);
-  font-size: 17px; line-height: 1.7;
+  font-size: 17px; line-height: 1.5;
   color: var(--ink); background: var(--paper);
 }
 a { color: var(--accent); text-decoration: none; }
@@ -42,12 +42,13 @@ a:hover { text-decoration: underline; }
   display: block; margin: 0 auto 48px;
 }
 h1 {
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: clamp(40px, 5vw, 76px);
   font-weight: 650; line-height: 1.05; letter-spacing: -0.02em;
 }
 .hero .lede {
-  font-size: 21px; line-height: 1.5; color: var(--ink-2);
-  margin: 24px auto 0; max-width: 24em;
+  font-size: 21px; line-height: 1.4; letter-spacing: -0.01em;
+  color: var(--ink-2);
+  margin: 24px auto 0; max-width: 30em;
 }
 .cta { margin-top: 48px; }
 .cta .primary {
@@ -66,7 +67,7 @@ h1 {
 main { max-width: 680px; margin: 0 auto; padding: 0 24px 96px; }
 section { padding-top: 96px; }
 h2 {
-  font-size: 28px; font-weight: 600; line-height: 1.25;
+  font-size: 28px; font-weight: 600; line-height: 1.2; letter-spacing: -0.015em;
   margin-bottom: 24px;
 }
 p { color: var(--ink-2); }
@@ -75,7 +76,7 @@ strong { color: var(--ink); font-weight: 600; }
 
 .gestures { border-top: 1px solid var(--line); }
 .gestures .row {
-  display: grid; grid-template-columns: 9em 1fr; gap: 16px;
+  display: grid; grid-template-columns: 11em 1fr; gap: 16px;
   padding: 24px 0; border-bottom: 1px solid var(--line);
 }
 .gestures .row dt { font-weight: 600; }
@@ -133,61 +134,73 @@ footer .mono { font-family: var(--font-mono); }
 <body>
 
 <header class="hero">
-  <img class="mark" src="./assets/starry-1024.png" alt="Aladdin 图标 · 梵高《星月夜》" width="128" height="128">
+  <img class="mark" src="./assets/starry-1024.png" alt="Aladdin icon — Van Gogh's The Starry Night" width="128" height="128">
   <h1>Aladdin</h1>
-  <p class="lede">按下 Fn 说话，文字落进光标。团队自己的 macOS 语音入口。</p>
+  <p class="lede">The lamp between you and AI. Hold one key, speak, release — and what you asked for is done.</p>
   <div class="cta">
-    <a class="primary" href="#install">安装 Aladdin</a>
-    <a class="alt" href="./downloads/Aladdin.app.zip">或直接下载 Aladdin.app.zip（15 MB）</a>
+    <a class="primary" href="#install">Install Aladdin</a>
+    <a class="alt" href="./downloads/Aladdin.app.zip">or download Aladdin.app.zip (15 MB)</a>
   </div>
-  <p class="meta">Apple Silicon · macOS 13+ · 内部工具</p>
+  <p class="meta">Apple Silicon · macOS 13+ · Internal tool</p>
 </header>
 
 <main>
   <section>
-    <h2>一个键，两个手势</h2>
+    <h2>The lamp, literally</h2>
+    <p>In the old story you rub a lamp, ask, and it happens. Aladdin is that interface for AI: a single physical key on your Mac. Press <strong>Fn</strong>, say what you want — exact text under your cursor, a spoken answer, an agent task — and it is granted. No wake word, no app to open, no chat window to tend.</p>
+    <p>The lamp earns its place by being trustworthy at the moment of contact. It listens only while you hold it. Dictation writes only into the field you anchored when you pressed; if focus moves, the text waits safely in Result Slip rather than landing in the wrong window. Agent tasks always stop for your review — nothing is sent until you press Send.</p>
+  </section>
+
+  <section>
+    <h2>One key, two gestures</h2>
     <dl class="gestures">
       <div class="row">
-        <dt>轻点 Fn，再点提交</dt>
-        <dd>听写。持续录音，边说边转写，润色后的逐字稿直接写进当前光标处，超过 5 分钟自动分段续录。</dd>
+        <dt>Tap Fn, tap again</dt>
+        <dd>Dictation. Continuous capture with streaming transcription; a faithful polish of your exact words lands at your cursor. Recordings past 5 minutes checkpoint and continue.</dd>
       </div>
       <div class="row">
-        <dt>按住 Fn，松开提交</dt>
-        <dd>意图。问、做、聊、控制都在这条道：短答用同语言语音回复，任务进 Agent Island 由你确认后才发送。</dd>
+        <dt>Hold Fn, release</dt>
+        <dd>Intent. Ask, act, chat, control. Short answers come back as speech in your language; longer results arrive as text. New agent tasks land in Agent Island and run only after you approve them.</dd>
       </div>
     </dl>
   </section>
 
+  <section>
+    <h2>Vision</h2>
+    <p>Typing is translation. You already know what you want; the keyboard makes you spell it out. Aladdin's bet is that speech is the native protocol between people and machines — and that it only works if the machine proves itself at every step: capture that verifiably stops, text that lands only where you aimed it, actions that wait for consent.</p>
+    <p>The goal is a computer you can simply ask. Not an assistant you visit — a lamp that is always within reach.</p>
+  </section>
+
   <section id="install">
-    <h2>安装</h2>
-    <p>推荐终端一行命令：下载、安装、配置、开机自启一次完成，且不触发浏览器下载的 Gatekeeper 拦截。</p>
-    <pre><code id="install-cmd">JavaScript 未启用；请用下面的手动安装。</code></pre>
+    <h2>Install</h2>
+    <p>One command downloads the app, installs it to <code>~/Applications</code>, asks for your gateway and token, and registers launch-at-login. Fetching with <code>curl</code> also skips the Gatekeeper quarantine that browser downloads trigger.</p>
+    <pre><code id="install-cmd">JavaScript is off — use the manual install below.</code></pre>
     <script>
       (function () {
         var base = location.href.replace(/\/index\.html([?#].*)?$/, "").replace(/\/$/, "");
-        // 落盘后再执行：macOS 自带 bash 3.2 从管道流式读脚本时会把
-        // 跨读块边界的多字节字符截碎，file 模式没有这个问题。
+        // Download-then-run: the stock macOS bash 3.2 can corrupt scripts
+        // streamed through a pipe; executing from a file cannot.
         document.getElementById("install-cmd").textContent =
           'curl -fsSL "' + base + '/install.sh" -o /tmp/aladdin-install.sh' +
           ' && bash /tmp/aladdin-install.sh "' + base + '"';
       })();
     </script>
-    <p>脚本会询问两样东西：<strong>网关地址</strong>和<strong>个人 token</strong>。不知道就先问网关管理员要，token 输入时不回显、只落在本机 <code>~/.config/aladdin/config.json</code>（0600）。</p>
+    <p>The script asks for two things: your team's <strong>gateway URL</strong> and your <strong>personal token</strong> — ask your gateway admin if you have neither. The token is read without echo and stored only in <code>~/.config/aladdin/config.json</code> (mode 0600).</p>
 
-    <h2 style="margin-top:64px">手动安装</h2>
+    <h2 style="margin-top:64px">Manual install</h2>
     <ol class="steps">
-      <li><div>解压 <a href="./downloads/Aladdin.app.zip">Aladdin.app.zip</a>，把 Aladdin.app 拖进「应用程序」。浏览器下载的包首次打开会被 Gatekeeper 拦下（应用未经 Apple 公证）：右键 → 打开，或先执行
+      <li><div>Unzip <a href="./downloads/Aladdin.app.zip">Aladdin.app.zip</a> and drag Aladdin.app into Applications. Browser downloads are quarantined and the app is not notarized, so first launch needs right-click → Open, or:
         <pre><code>xattr -dr com.apple.quarantine ~/Applications/Aladdin.app</code></pre></div></li>
-      <li><div>按提示授予系统权限：<strong>麦克风、辅助功能、输入监控</strong>；再把 系统设置 → 键盘 → 「按下 🌐 键时」改为「无操作」，并关闭系统听写，避免两次 Fn 与系统抢按键。</div></li>
-      <li><div>菜单栏 Aladdin 图标 → 打开配置，填入网关地址与个人 token，重新启动应用。</div></li>
+      <li><div>Grant the system permissions it asks for: <strong>Microphone, Accessibility, Input Monitoring</strong>. Then set System Settings → Keyboard → "Press 🌐 key to" → "Do Nothing", and turn off system Dictation, so two Fn presses never race the OS.</div></li>
+      <li><div>Menu bar → Aladdin icon → open the config file, enter your gateway URL and token, and relaunch the app.</div></li>
     </ol>
-    <div class="note">Aladdin 是团队内部工具：转写与对话都经由团队自己的网关，本机不存任何 API key。没有网关 token 的话，应用能启动但不能工作。</div>
+    <div class="note">Aladdin is an internal tool. Transcription and conversation run through your team's own gateway; no API keys live on your machine. Without a gateway token the app starts but cannot work.</div>
   </section>
 </main>
 
 <footer>
-  <p>版本 <span class="mono">6f53505</span> · 2026-08-08 · arm64</p>
-  <p>图 · 梵高《星月夜》（1889，公有领域）</p>
+  <p>Version <span class="mono">6f53505</span> · 2026-08-08 · arm64</p>
+  <p>Art · Vincent van Gogh, The Starry Night (1889, public domain)</p>
 </footer>
 
 </body>
