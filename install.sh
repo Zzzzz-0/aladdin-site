@@ -5,9 +5,13 @@
 set -euo pipefail
 umask 077
 
+# 整个脚本包在 main() 里：curl | bash 场景下 bash 必须先解析完整文件
+# 才开始执行，杜绝流式执行中 stdin 被消费或下载截断造成的解析损坏。
+main() {
+
 BASE_URL="${1:-}"
 if [[ -z "$BASE_URL" ]]; then
-  echo "❌ 缺少下载地址参数。请到官网复制完整安装命令（curl … | bash -s -- <地址>）。" >&2
+  echo "❌ 缺少下载地址参数。请到官网复制完整安装命令（curl … -o /tmp/aladdin-install.sh && bash /tmp/aladdin-install.sh <地址>）。" >&2
   exit 1
 fi
 BASE_URL="${BASE_URL%/}"
@@ -44,7 +48,7 @@ ditto "$TMP/unpacked/Aladdin.app" "$APP_DST"
 /usr/bin/xattr -dr com.apple.quarantine "$APP_DST" 2>/dev/null || true
 
 if [[ -f "$CONFIG" ]]; then
-  echo "==> 已有配置 $CONFIG，保留不动"
+  echo "==> 已有配置 ${CONFIG}，保留不动"
 else
   echo "==> 首次配置：需要团队网关地址和你的个人 token（问网关管理员要）"
   read -r -p "网关地址（如 https://gw.aladdin.bz）: " GATEWAY </dev/tty
@@ -116,3 +120,7 @@ cat <<'DONE'
 
 之后：轻点 Fn 开始听写、再点提交；按住 Fn 说话、松开提交。
 DONE
+
+}
+
+main "$@"

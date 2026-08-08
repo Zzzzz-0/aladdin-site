@@ -165,8 +165,11 @@ footer .mono { font-family: var(--font-mono); }
     <script>
       (function () {
         var base = location.href.replace(/\/index\.html([?#].*)?$/, "").replace(/\/$/, "");
+        // 落盘后再执行：macOS 自带 bash 3.2 从管道流式读脚本时会把
+        // 跨读块边界的多字节字符截碎，file 模式没有这个问题。
         document.getElementById("install-cmd").textContent =
-          'curl -fsSL "' + base + '/install.sh" | bash -s -- "' + base + '"';
+          'curl -fsSL "' + base + '/install.sh" -o /tmp/aladdin-install.sh' +
+          ' && bash /tmp/aladdin-install.sh "' + base + '"';
       })();
     </script>
     <p>脚本会询问两样东西：<strong>网关地址</strong>和<strong>个人 token</strong>。不知道就先问网关管理员要，token 输入时不回显、只落在本机 <code>~/.config/aladdin/config.json</code>（0600）。</p>
