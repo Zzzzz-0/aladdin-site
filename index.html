@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aladdin — 按下 Fn 说话，文字落进光标</title>
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<style>
+:root {
+  --ink:    #f5f5f7;
+  --ink-2:  #a3a3ab;
+  --paper:  #101218;
+  --paper-2:#171a23;
+  --line:   rgba(255,255,255,0.10);
+  --line-2: rgba(255,255,255,0.16);
+  --accent: #e3b74f;
+  --shadow: 0 4px 24px rgba(0,0,0,0.45);
+  --r-control: 8px;
+  --r-media: 18px;
+  --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+               "Segoe UI", Roboto, "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-text);
+  font-size: 17px; line-height: 1.7;
+  color: var(--ink); background: var(--paper);
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.hero {
+  max-width: 980px; margin: 0 auto; padding: 96px 24px 64px;
+  text-align: center;
+}
+.hero img.mark {
+  width: 128px; height: 128px;
+  border-radius: var(--r-media);
+  box-shadow: var(--shadow);
+  display: block; margin: 0 auto 48px;
+}
+h1 {
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 650; line-height: 1.05; letter-spacing: -0.02em;
+}
+.hero .lede {
+  font-size: 21px; line-height: 1.5; color: var(--ink-2);
+  margin: 24px auto 0; max-width: 24em;
+}
+.cta { margin-top: 48px; }
+.cta .primary {
+  display: inline-block;
+  background: var(--accent); color: #1d1d1f;
+  font-size: 17px; font-weight: 600; line-height: 1;
+  padding: 16px 32px; border-radius: 980px;
+}
+.cta .primary:hover { text-decoration: none; opacity: 0.92; }
+.cta .alt { display: block; margin-top: 24px; font-size: 14px; }
+.hero .meta {
+  margin-top: 24px; font-size: 12px; color: var(--ink-2);
+  font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+main { max-width: 680px; margin: 0 auto; padding: 0 24px 96px; }
+section { padding-top: 96px; }
+h2 {
+  font-size: 28px; font-weight: 600; line-height: 1.25;
+  margin-bottom: 24px;
+}
+p { color: var(--ink-2); }
+p + p { margin-top: 1em; }
+strong { color: var(--ink); font-weight: 600; }
+
+.gestures { border-top: 1px solid var(--line); }
+.gestures .row {
+  display: grid; grid-template-columns: 9em 1fr; gap: 16px;
+  padding: 24px 0; border-bottom: 1px solid var(--line);
+}
+.gestures .row dt { font-weight: 600; }
+.gestures .row dd { color: var(--ink-2); }
+
+pre {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  padding: 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono); font-size: 14px; line-height: 1.6;
+  color: var(--ink);
+}
+code { font-family: var(--font-mono); font-size: 0.92em; }
+p code, li code {
+  background: var(--paper-2); border: 1px solid var(--line);
+  padding: 1px 6px; border-radius: var(--r-control);
+}
+
+ol.steps { list-style: none; counter-reset: step; }
+ol.steps > li {
+  counter-increment: step;
+  display: grid; grid-template-columns: 2em 1fr; gap: 16px;
+  padding: 24px 0; border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+}
+ol.steps > li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-mono); font-size: 14px; color: var(--ink-2);
+  padding-top: 3px;
+}
+ol.steps > li:first-child { border-top: 1px solid var(--line); }
+ol.steps pre { margin-top: 12px; }
+
+.note {
+  margin-top: 32px; padding: 16px;
+  background: var(--paper-2); border: 1px solid var(--line);
+  font-size: 14px; color: var(--ink-2);
+}
+
+footer {
+  max-width: 680px; margin: 0 auto; padding: 48px 24px 96px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--ink-2); line-height: 1.8;
+}
+footer .mono { font-family: var(--font-mono); }
+
+@media (max-width: 734px) {
+  .hero { padding: 64px 24px 48px; }
+  section { padding-top: 64px; }
+  .gestures .row { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="mark" src="./assets/starry-1024.png" alt="Aladdin 图标 · 梵高《星月夜》" width="128" height="128">
+  <h1>Aladdin</h1>
+  <p class="lede">按下 Fn 说话，文字落进光标。团队自己的 macOS 语音入口。</p>
+  <div class="cta">
+    <a class="primary" href="#install">安装 Aladdin</a>
+    <a class="alt" href="./downloads/Aladdin.app.zip">或直接下载 Aladdin.app.zip（15 MB）</a>
+  </div>
+  <p class="meta">Apple Silicon · macOS 13+ · 内部工具</p>
+</header>
+
+<main>
+  <section>
+    <h2>一个键，两个手势</h2>
+    <dl class="gestures">
+      <div class="row">
+        <dt>轻点 Fn，再点提交</dt>
+        <dd>听写。持续录音，边说边转写，润色后的逐字稿直接写进当前光标处，超过 5 分钟自动分段续录。</dd>
+      </div>
+      <div class="row">
+        <dt>按住 Fn，松开提交</dt>
+        <dd>意图。问、做、聊、控制都在这条道：短答用同语言语音回复，任务进 Agent Island 由你确认后才发送。</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section id="install">
+    <h2>安装</h2>
+    <p>推荐终端一行命令：下载、安装、配置、开机自启一次完成，且不触发浏览器下载的 Gatekeeper 拦截。</p>
+    <pre><code id="install-cmd">JavaScript 未启用；请用下面的手动安装。</code></pre>
+    <script>
+      (function () {
+        var base = location.href.replace(/\/index\.html([?#].*)?$/, "").replace(/\/$/, "");
+        document.getElementById("install-cmd").textContent =
+          'curl -fsSL "' + base + '/install.sh" | bash -s -- "' + base + '"';
+      })();
+    </script>
+    <p>脚本会询问两样东西：<strong>网关地址</strong>和<strong>个人 token</strong>。不知道就先问网关管理员要，token 输入时不回显、只落在本机 <code>~/.config/aladdin/config.json</code>（0600）。</p>
+
+    <h2 style="margin-top:64px">手动安装</h2>
+    <ol class="steps">
+      <li><div>解压 <a href="./downloads/Aladdin.app.zip">Aladdin.app.zip</a>，把 Aladdin.app 拖进「应用程序」。浏览器下载的包首次打开会被 Gatekeeper 拦下（应用未经 Apple 公证）：右键 → 打开，或先执行
+        <pre><code>xattr -dr com.apple.quarantine ~/Applications/Aladdin.app</code></pre></div></li>
+      <li><div>按提示授予系统权限：<strong>麦克风、辅助功能、输入监控</strong>；再把 系统设置 → 键盘 → 「按下 🌐 键时」改为「无操作」，并关闭系统听写，避免两次 Fn 与系统抢按键。</div></li>
+      <li><div>菜单栏 Aladdin 图标 → 打开配置，填入网关地址与个人 token，重新启动应用。</div></li>
+    </ol>
+    <div class="note">Aladdin 是团队内部工具：转写与对话都经由团队自己的网关，本机不存任何 API key。没有网关 token 的话，应用能启动但不能工作。</div>
+  </section>
+</main>
+
+<footer>
+  <p>版本 <span class="mono">6f53505</span> · 2026-08-08 · arm64</p>
+  <p>图 · 梵高《星月夜》（1889，公有领域）</p>
+</footer>
+
+</body>
+</html>
